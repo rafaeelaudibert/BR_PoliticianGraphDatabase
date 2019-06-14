@@ -9,12 +9,11 @@ example_be.initialize()
 
 @app.route("/", methods=('GET', 'POST'))
 def home():
-    abc = example_be.get_event_goers()
     return render_template("home.html")
 
 @app.route("/candidatos", methods=('GET', 'POST'))
 def candidatos():
-    candidaturas = example_be.get_event_goers()
+    candidaturas = example_be.get_deputados()
     return render_template("candidato.html", candidaturas=candidaturas)
 
 @app.route("/candidatura/<candidatura>")

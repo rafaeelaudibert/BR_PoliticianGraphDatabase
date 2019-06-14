@@ -13,20 +13,35 @@ def initialize():
     francis = Node("User", Name="Francis", Age="20")
     bowl = Node("Event", Name="Bowling Meetup", Day="02/01/1999", Location="Dairy County Bowling Alley")
 
+    delete_query = """
+        MATCH(n) DETACH DELETE n
+    """
+
+    graph.run(delete_query)
+    
+    init_deputados_query = """
+        WITH 'https://dadosabertos.camara.leg.br/api/v2/deputados?ordem=ASC&ordenarPor=nome' AS url
+        CALL apoc.load.json(url) YIELD value
+        UNWIND value.dados as dados
+        CREATE(d:Deputado {Nome : dados.nome})
+    """
+    graph.run(init_deputados_query)
+
+"""
     graph.create(jeff)
     graph.create(Relationship(ahmed, "WENT", bowl))
     graph.create(Relationship(john, "WENT", bowl))
     graph.create(Relationship(francis, "WENT", bowl))
     graph.create(Relationship(john, "FATHER", francis))
-
-def get_event_goers():
+"""
+def get_deputados():
     query = """
-        MATCH(usr:User)-[:WENT]->(ev:Event)
-        RETURN usr.Name
+        MATCH(dep:Deputado)
+        RETURN dep.Nome
     """
 
-    goers = []
+    deputados = []
     for record in graph.run(query):
-        goers.append(record["usr.Name"])
+        deputados.append(record["dep.Nome"])
     
-    return goers
+    return deputados
