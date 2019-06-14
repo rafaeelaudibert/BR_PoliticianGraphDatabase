@@ -1,0 +1,17 @@
+<html>
+<head> 
+	<title>Bem vindo ao nosso Banco de Dados!</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<nav>
+</head>
+<body>
+	<ul class="navbar">
+		<h2>candidaturas</h2>
+		{%for candidatura in candidaturas%}
+		<li><a href="{{ url_for("candidatura", candidatura=candidatura) }}">{{candidatura}}</a>
+		{%endfor%}
+	</ul>
+
+	<h1>Bem vindo ao nosso Banco de Dados!</h1>
+
+</body>
