@@ -14,7 +14,7 @@ def home():
 
 @app.route("/candidatos", methods=('GET', 'POST'))
 def candidatos():
-    candidaturas = ['2016', '2010']
+    candidaturas = example_be.get_event_goers()
     return render_template("candidato.html", candidaturas=candidaturas)
 
 @app.route("/candidatura/<candidatura>")
