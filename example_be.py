@@ -7,33 +7,49 @@ graph = Graph("http://gui:abc@127.0.0.1:7474/db/data")
 # 3: port
 
 def initialize():
-    jeff = Node("User", Name="Jeff", Age="20")
-    ahmed = Node("User", Name="Ahmed", Age="40")
-    john = Node("User", Name="John", Age="9")
-    francis = Node("User", Name="Francis", Age="20")
-    bowl = Node("Event", Name="Bowling Meetup", Day="02/01/1999", Location="Dairy County Bowling Alley")
-
     delete_query = """
         MATCH(n) DETACH DELETE n
     """
-
     graph.run(delete_query)
-    
-    init_deputados_query = """
+
+    graph.run("CREATE CONSTRAINT ON (d:Deputado) ASSERT d.nomeCivil is UNIQUE;")
+    graph.run("CREATE CONSTRAINT ON (d:Deputado) ASSERT d.id is UNIQUE;")
+    graph.run("CREATE CONSTRAINT ON (p:Partido) ASSERT p.sigla is UNIQUE;")
+    graph.run("CREATE CONSTRAINT ON (m:Municipio) ASSERT m.nome is UNIQUE;")
+    graph.run("CREATE CONSTRAINT ON (uf:UnidadeFederativa) ASSERT uf.sigla is UNIQUE;")
+
+
+    get_ids_query = """
         WITH 'https://dadosabertos.camara.leg.br/api/v2/deputados?ordem=ASC&ordenarPor=nome' AS url
         CALL apoc.load.json(url) YIELD value
         UNWIND value.dados as dados
-        CREATE(d:Deputado {Nome : dados.nome})
+        RETURN dados.id
     """
-    graph.run(init_deputados_query)
+    ids = [r['dados.id'] for r in graph.run(get_ids_query)]
 
-"""
-    graph.create(jeff)
-    graph.create(Relationship(ahmed, "WENT", bowl))
-    graph.create(Relationship(john, "WENT", bowl))
-    graph.create(Relationship(francis, "WENT", bowl))
-    graph.create(Relationship(john, "FATHER", francis))
-"""
+    for id in ids:
+        init_deputado_query = """
+            WITH 'https://dadosabertos.camara.leg.br/api/v2/deputados/{id}'""".format(id=id) + """ AS url
+            CALL apoc.load.json(url) YIELD value
+            UNWIND value.dados as dados
+
+            MERGE(d:Deputado {id : TOINT(dados.id), nomeCivil : dados.nomeCivil})
+                ON CREATE SET d.idLegislatura = dados.ultimoStatus.idLegislatura, d.uri = dados.uri, d.urlFoto = dados.ultimoStatus.urlFoto,
+                d.sexo = dados.sexo, d.nascimento = DATE(dados.dataNascimento), d.cpf = dados.cpf, d.email = dados.ultimoStatus.gabinete.email
+
+            MERGE(p:Partido {sigla : dados.ultimoStatus.siglaPartido})
+
+            MERGE (d)-[:FILIADO]-(p)
+
+            FOREACH(t IN CASE WHEN dados.ufNascimento IS NOT NULL THEN [1] else [] END |
+                MERGE(m:Municio {nome: dados.municipioNascimento})
+                MERGE(uf: UnidadeFederativa {sigla: dados.ufNascimento})
+                MERGE (d)-[:ORIGEM]->(m)
+                MERGE (m)-[:SITUADO]-(uf)
+            )		
+        """
+        graph.run(init_deputado_query)
+
 def get_deputados():
     query = """
         MATCH(dep:Deputado)
