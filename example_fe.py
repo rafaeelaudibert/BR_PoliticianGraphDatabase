@@ -5,7 +5,7 @@ name = "APPLICATION" #"__main__"
 
 app = Flask(name)
 
-example_be.initialize()
+#example_be.initialize()
 
 @app.route("/", methods=('GET', 'POST'))
 def home():
@@ -16,7 +16,7 @@ def candidatos():
     candidaturas = example_be.get_deputados()
     return render_template("candidato.html", candidaturas=candidaturas)
 
-@app.route("/candidatura/<candidatura>")
+@app.route("/candidatos/<candidatura>")
 def candidatura(candidatura):
     return candidatura;
 

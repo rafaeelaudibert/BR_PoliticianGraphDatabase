@@ -53,11 +53,11 @@ def initialize():
 def get_deputados():
     query = """
         MATCH(dep:Deputado)
-        RETURN dep.Nome
+        RETURN dep.nomeCivil
     """
 
     deputados = []
     for record in graph.run(query):
-        deputados.append(record["dep.Nome"])
+        deputados.append(record["dep.nomeCivil"])
     
     return deputados
