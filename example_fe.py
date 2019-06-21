@@ -5,7 +5,7 @@ name = "APPLICATION" #"__main__"
 
 app = Flask(name)
 
-#example_be.initialize()
+example_be.initialize()
 
 @app.route("/", methods=('GET', 'POST'))
 def home():
