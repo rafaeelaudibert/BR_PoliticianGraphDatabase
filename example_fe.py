@@ -1,11 +1,12 @@
 from flask import Flask, render_template, request
-import example_be
+from example_be import CamaraDosDeputados
 
 name = "APPLICATION" #"__main__"
 
 app = Flask(name)
 
-example_be.initialize()
+camaraDosDeputados = CamaraDosDeputados()
+camaraDosDeputados.init_db()
 
 @app.route("/", methods=('GET', 'POST'))
 def home():
@@ -13,12 +14,12 @@ def home():
 
 @app.route("/candidatos", methods=('GET', 'POST'))
 def candidatos():
-    candidaturas = example_be.get_deputados()
+    candidaturas = camaraDosDeputados.get_deputados()
     return render_template("candidato.html", candidaturas=candidaturas)
 
 @app.route("/candidatos/<candidatura>")
 def candidatura(candidatura):
-    return candidatura;
+    return candidatura
 
 @app.route("/mandatos", methods=('GET', 'POST'))
 def mandatos():
