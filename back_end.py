@@ -7,7 +7,7 @@ class CamaraDosDeputados:
         # 1: username 2: password 3: port
         #                          |1 | 2 |          | 3 |
         self.graph = Graph("http://gui:abc@127.0.0.1:7474/db/data")
-        
+
     def init_db(self):
         self.delete_all()
         self.create_constraints()
@@ -124,10 +124,45 @@ class CamaraDosDeputados:
             """
             self.graph.run(init_party_query)
 
+    def get_all_query(self):
+        return "\"MATCH a=(:Deputado)-[]-(:Partido) RETURN a\""
+
+    def get_deputados_query(self):
+        return "\"MATCH (d:Deputado) RETURN d\""
+
+    def get_partidos_query(self):
+        return "\"MATCH (p:Partido) RETURN p\""
+
+    def get_orgaos_query(self):
+        return "\"MATCH (o:Orgao) RETURN o\""
+
+    def get_partidos(self):
+        query = """
+            MATCH(p:Partido)
+            RETURN p.sigla
+            ORDER BY p.totalMembros DESC
+        """
+        partidos = []
+        for partido in self.graph.run(query):
+            partidos.append(partido["p.sigla"])
+        return partidos
+
+    def get_orgaos(self):
+        query = """
+            MATCH(o:Orgao)
+            RETURN o.siglaOrgao
+            ORDER BY o.siglaOrgao
+        """
+        orgaos = []
+        for orgao in self.graph.run(query):
+            orgaos.append(orgao["o.siglaOrgao"])
+        return orgaos
+
     def get_deputados(self):
         query = """
             MATCH(dep:Deputado)
             RETURN dep.nomeCivil
+            ORDER BY dep.nomeCivil
         """
         deputados = []
         for record in self.graph.run(query):

@@ -1,34 +1,64 @@
 body {
-  padding-left: 11em;
-  font-family: Impact, Georgia, "Times New Roman",
-        Times, serif;
-  color: purple;
-  background-color: #d8da3d }
+    padding-left: 11em;
+    font-family: Impact, Georgia, "Times New Roman", Times, serif;
+    color: black;
+    background-color: grey }
+
 ul.navbar {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  position: absolute;
-  top: 5em;
-  left: 1em;
-  width: 10em }
+    margin-top: 5vw;
+    list-style-type: none;
+    padding: 0;
+    position: absolute;
+    top: 5em;
+    left: 1em;
+    width: 10em }
+
 h1 {
-  font-family: Impact, Georgia, Geneva, Arial, SunSans-Regular, sans-serif;
-	font-size: 40px }
+    text-align: center;
+    font-size: 5vw }
+
+
 ul.navbar li {
-  background: white;
-  margin: 0.5em 0;
-  padding: 0.3em;
-  border-right: 1em solid black }
+    text-align: center;
+    background-color: lightgrey;
+    width: 10vw;
+    padding: 1vw;
+    border-bottom: 1px solid black;
+    transition: 0.3s;
+    color: grey;
+}
+
+ul.navbar li:hover {
+    width: 15vw;
+    color: black;
+    font-weight: bold;
+}
+
+
 ul.navbar a {
-	font-size: 20px;
-	font-family: Impact, Georgia;
-  text-decoration: none }
-a:link {
-  color: blue }
-a:visited {
-  color: purple }
+    color: inherit;
+    font-size: 2vw;
+    font-family: Impact, Georgia;
+    text-decoration: none }
+
+
 address {
-  margin-top: 1em;
-  padding-top: 1em;
-  border-top: thin dotted }
+    margin-top: 1em;
+    padding-top: 1em;
+    border-top: thin dotted }
+
+#vis {
+    background-color: lightgrey;
+    margin-left: 15%;
+    height: 70%;
+    width: 70%;
+    border-radius: 2vw;
+    transition: 0.3s;
+}
+
+#vis:hover {
+    margin-left: 10%;
+    width: 80%;
+    height: 80%;
+
+}

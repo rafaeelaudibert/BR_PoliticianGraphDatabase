@@ -1,16 +1,17 @@
 <html>
-<head> 
-	<title>Banco de Dados BR</title>
-	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<nav>
-</head>
-<body>
-	<ul class="navbar">
-		<li><a href="{{ url_for("candidatos") }}">Candidatos</a>
-		<li><a href="{{ url_for("mandatos") }}">Mandatos</a>
-		<li><a href="{{ url_for("partidos") }}">Partidos</a>
-	</ul>
-
-	<h1>Bem vindo ao nosso Banco de Dados!</h1>
-
-</body>
+    <head>
+        <title>Banco de Dados BR</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <script src="https://rawgit.com/neo4j-contrib/neovis.js/master/dist/neovis.js"></script>
+        <script src="{{url_for('static', filename='drawGraph.js')}}"></script>
+    </head>
+    <body onload="draw({{cypher}})">
+        <ul class="navbar">
+            <li><a href="{{ url_for("deputados") }}">Deputados</a></li>
+            <li><a href="{{ url_for("partidos") }}">Partidos</a></li>
+            <li><a href="{{ url_for("orgaos") }}">Órgãos</a></li>
+        </ul>
+        <h1>Bem vindo ao nosso Banco de Dados!</h1>
+        <div id="vis"></div>
+    </body>
+</html>

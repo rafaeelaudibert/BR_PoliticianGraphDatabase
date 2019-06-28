@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <title>Deputados</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <script src="https://rawgit.com/neo4j-contrib/neovis.js/master/dist/neovis.js"></script>
+        <script src="{{url_for('static', filename='drawGraph.js')}}"></script>
+        <style>
+         ul.navbar a {
+             font-size: 1vw;
+         }
+
+         ul.navbar li {
+             width: 15vw;
+         }
+
+         ul.navbar li:hover {
+             width: 20vw;
+         }
+
+         #vis {
+             padding: 0;
+             position: fixed;
+             background-color: lightgrey;
+             height: 60%;
+             width: 60%;
+             border-radius: 2vw;
+             transition: 0.3s;
+         }
+
+         #vis:hover {
+             width: 70%;
+             height: 70%;
+         }
+        </style>
+
+    </head>
+    <body onload="draw({{cypher}})">
+        <ul class="navbar">
+            {%for deputado in deputados%}
+            <li><a href="{{ url_for("ficha_deputado", deputado=deputado)}}">{{deputado}}</a></li>
+                {%endfor%}
+        </ul>
+        <h1>Deputados Brasileiros</h1>
+        <div id="vis"></div>
+    </body>
+</html>
