@@ -12,7 +12,7 @@ function draw(cypher){
         },
         relationships: {
             "FILIADO": {
-                caption: ""
+                caption: false
             }
         },
         initial_cypher: cypher

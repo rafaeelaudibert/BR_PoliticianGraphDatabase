@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <title>{{dados["o.siglaOrgao"]}}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <script src="https://rawgit.com/neo4j-contrib/neovis.js/master/dist/neovis.js"></script>
+        <script src="{{url_for('static', filename='drawGraph.js')}}"></script>
+        <style>
+         body{
+             padding-left: 0%;
+         }
+         .infoblock {
+             float: none;
+             margin: 0px;
+             margin-left: 25%;
+         }
+        </style>
+    </head>
+    <body>
+        <h1>{{dados["o.nomeOrgao"]}}</h1>
+        <span class="infoBlock"><span class="field">Sigla: </span><span class="info">{{dados["o.siglaOrgao"]}}</span></span>
+        <span class="infoBlock"><span class="field">Identificação: </span><span class="info">{{dados["o.idOrgao"]}}</span></span>
+    </body>
+</html>

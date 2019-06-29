@@ -62,3 +62,50 @@ address {
     height: 80%;
 
 }
+
+img {
+    float: left;
+    margin-left: 3vw;
+    margin-top: 3vw;
+    border-radius: 2vw;
+    width: 18vw;
+    height: 21vw;
+    transition: 0.3s;
+}
+
+img:hover {
+    width: 20vw;
+    height: 23vw;
+}
+
+h2 {
+    border-bottom: 1px solid black;
+}
+
+.infoBlock {
+    float: right;
+    margin-right: 15%;
+    text-align: center;
+    background-color: lightgrey;
+    border-bottom: 1px solid black;
+    height: auto;
+    width: 50vw;
+    display: inline-block;
+    transition: 0.3s;
+    font-size: 2vw;
+}
+
+.infoBlock:hover{
+    font-size: 3vw;
+}
+
+.field {
+    font-weight: normal;
+    color: #505050;
+    margin-top: 0.25vw;
+}
+
+.info {
+    font-weight: bold;
+    margin-top: 0px;
+}

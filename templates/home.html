@@ -3,8 +3,36 @@
         <title>Banco de Dados BR</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
         <script src="https://rawgit.com/neo4j-contrib/neovis.js/master/dist/neovis.js"></script>
+        <script src="/codepress/codepress.js" type="text/javascript"></script>
         <script src="{{url_for('static', filename='drawGraph.js')}}"></script>
     </head>
+    <style> 
+     textarea {
+         font-family: monospace;
+         margin-top: 2vw;
+         margin-left: 13vw;
+         margin-bottom: 5vw;
+         width: 50vw;
+         height: 10vw;
+         float: left;
+         text-align: center;
+         border-radius: 2vw;
+         background-color: lightgrey;
+         font-size: 3vw;
+     }
+
+     button{
+         border-radius: 2vw;
+         margin-bottom: 5vw;
+         font-size: 2vw;
+         margin-top: 2vw;
+         margin-right: 13vw;
+         float: right;
+         height: 10vw;
+         width: 10vw;
+     }
+
+    </style>
     <body onload="draw({{cypher}})">
         <ul class="navbar">
             <li><a href="{{ url_for("deputados") }}">Deputados</a></li>
@@ -13,5 +41,9 @@
         </ul>
         <h1>Bem vindo ao nosso Banco de Dados!</h1>
         <div id="vis"></div>
+        <form method="POST"> 
+            <textarea name="textbox" class="codepress javascript"></textarea>
+            <button type="submit" name="submit">Submit</button>
+        </form>
     </body>
 </html>

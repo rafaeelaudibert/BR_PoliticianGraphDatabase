@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>{{dados["d.nome"]}}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <script src="https://rawgit.com/neo4j-contrib/neovis.js/master/dist/neovis.js"></script>
+        <script src="{{url_for('static', filename='drawGraph.js')}}"></script>
+        <style>
+         body{
+             padding-left: 0%;
+         }
+
+         #vis {
+             margin-right: 5vw;
+             margin-bottom: 10vw;
+             margin-top: 5vw;
+             float: right;
+         }
+        </style>
+    </head>
+    <nav>
+        <img src={{dados["d.urlFoto"]}} alt={{dados["d.nome"]}}>
+    </nav>
+    <body onload="draw({{cypher}})">
+        <h1>{{dados["d.nome"]}}</h1>
+        <span class="infoBlock"><span class="field">Nome civil: </span><span class="info">{{dados["d.nomeCivil"]}}</span></span>
+        <span class="infoBlock"><span class="field">Data de Nascimento: </span><span class="info">{{dados["d.nascimento"]}}</span></span>
+        <span class="infoBlock"><span class="field">Escolaridade: </span><span class="info">{{dados["d.escolaridade"]}}</span></span>
+        <span class="infoBlock"><span class="field">Sexo: </span><span class="info">{{dados["d.sexo"]}}</span></span>
+        <span class="infoBlock"><span class="field">CPF: </span><span class="info">{{dados["d.cpf"]}}</span></span>
+        <span class="infoBlock"><span class="field">Identificação: </span><span class="info">{{dados["d.id"]}}</span></span>
+        <div id="vis"></div>
+
+    </body>
+</html>

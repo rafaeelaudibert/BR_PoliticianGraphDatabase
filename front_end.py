@@ -3,14 +3,19 @@ from back_end import CamaraDosDeputados
 
 name = "APPLICATION" #"__main__"
 
-app = Flask(name)
+app = Flask(__name__)
 
 camaraDosDeputados = CamaraDosDeputados()
 #camaraDosDeputados.init_db()
 
-@app.route("/", methods=('GET', 'POST'))
+@app.route("/", methods=['GET'])
 def home():
     return render_template("home.html", cypher=camaraDosDeputados.get_all_query())
+
+@app.route("/", methods=['POST'])
+def home_post():
+    newCypher = "\"" + request.form.get("textbox") + " LIMIT 1000" + "\""
+    return render_template("home.html", cypher=newCypher)
 
 @app.route("/deputados/", methods=('GET', 'POST'))
 def deputados():
@@ -19,7 +24,8 @@ def deputados():
 
 @app.route("/deputados/<deputado>")
 def ficha_deputado(deputado):
-    return deputado
+    dados = camaraDosDeputados.get_deputado_info(deputado)
+    return render_template("ficha_deputado.html", dados=dados, cypher=camaraDosDeputados.get_deputado_relations_query(deputado))
 
 @app.route("/partidos/")
 def partidos():
@@ -28,7 +34,8 @@ def partidos():
 
 @app.route("/partidos/<partido>")
 def ficha_partido(partido):
-    return partido;
+    dados = camaraDosDeputados.get_partido_info(partido)
+    return render_template("ficha_partido.html", dados=dados);
 
 @app.route("/orgaos/")
 def orgaos():
@@ -37,7 +44,8 @@ def orgaos():
 
 @app.route("/orgaos/<orgao>")
 def ficha_orgao(orgao):
-    return orgao
+    dados = camaraDosDeputados.get_orgao_info(orgao)
+    return render_template("ficha_orgao.html", dados=dados)
 
 if name == "__main__":
     app.run(debug=True)

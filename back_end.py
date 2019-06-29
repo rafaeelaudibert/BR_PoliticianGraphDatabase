@@ -102,7 +102,7 @@ class CamaraDosDeputados:
                 FOREACH(orgao in orgaos |
                     MERGE (o:Orgao {idOrgao: TOINT(orgao.idOrgao)})
                         ON CREATE SET o.uriOrgao = orgao.uriOrgao, o.siglaOrgao = orgao.siglaOrgao, o.nomeOrgao = orgao.nomeOrgao
-                    
+
                     CREATE (dep)-[:PARTICIPA {titulo: orgao.titulo, dataInicio: DATE(left(orgao.dataInicio,10)), dataFim: DATE(left(orgao.dataFim,10))}]->(o)
                 )
             """
@@ -136,6 +136,17 @@ class CamaraDosDeputados:
     def get_orgaos_query(self):
         return "\"MATCH (o:Orgao) RETURN o\""
 
+    def get_deputados(self):
+        query = """
+            MATCH(dep:Deputado)
+            RETURN dep.nome
+            ORDER BY dep.nome
+        """
+        deputados = []
+        for record in self.graph.run(query):
+            deputados.append(record["dep.nome"])
+        return deputados
+
     def get_partidos(self):
         query = """
             MATCH(p:Partido)
@@ -143,8 +154,8 @@ class CamaraDosDeputados:
             ORDER BY p.totalMembros DESC
         """
         partidos = []
-        for partido in self.graph.run(query):
-            partidos.append(partido["p.sigla"])
+        for record in self.graph.run(query):
+            partidos.append(record["p.sigla"])
         return partidos
 
     def get_orgaos(self):
@@ -154,18 +165,48 @@ class CamaraDosDeputados:
             ORDER BY o.siglaOrgao
         """
         orgaos = []
-        for orgao in self.graph.run(query):
-            orgaos.append(orgao["o.siglaOrgao"])
+        for record in self.graph.run(query):
+            orgaos.append(record["o.siglaOrgao"])
         return orgaos
 
-    def get_deputados(self):
-        query = """
-            MATCH(dep:Deputado)
-            RETURN dep.nomeCivil
-            ORDER BY dep.nomeCivil
-        """
-        deputados = []
-        for record in self.graph.run(query):
-            deputados.append(record["dep.nomeCivil"])
-        return deputados
 
+    def get_deputado_info(self, deputado_name):
+        query = """
+            MATCH (d:Deputado)
+            WHERE d.nome =
+        """
+        query += '\"' + deputado_name + '\"'
+        query += """
+            RETURN d.nascimento, d.nomeCivil, d.urlFoto, d.cpf, d.escolaridade, d.sexo, d.nome, d.idLegislatura, d.id
+        """
+        for record in self.graph.run(query):
+            return record
+
+    def get_deputado_relations_query(self, deputado_name):
+        query = "\"MATCH a=(d:Deputado)-[]-() WHERE d.nome = '" + deputado_name + "' RETURN a\""
+        return query
+
+
+    def get_partido_info(self, partido_name):
+        query = """
+            MATCH (p:Partido)
+            WHERE p.sigla =
+        """
+        query += '\"' + partido_name + '\"'
+        query += """
+            RETURN p.totalMembros, p.sigla, p.situacao, p.nome, p.id, p.urlLogo
+        """
+        for record in self.graph.run(query):
+            return record
+
+    def get_orgao_info(self, orgao_name):
+        query = """
+            MATCH (o:Orgao)
+            WHERE o.siglaOrgao =
+        """
+        query += '\"' + orgao_name + '\"'
+        query += """
+            RETURN o.nomeOrgao, o.siglaOrgao, o.idOrgao
+        """
+        for record in self.graph.run(query):
+            return record

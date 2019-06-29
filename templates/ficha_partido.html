@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <title>{{dados["p.nome"]}}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <script src="https://rawgit.com/neo4j-contrib/neovis.js/master/dist/neovis.js"></script>
+        <script src="{{url_for('static', filename='drawGraph.js')}}"></script>
+        <style>
+         body{
+             padding-left: 0%;
+         }
+        </style>
+    </head>
+    <nav>
+        <img src={{dados["p.urlLogo"]}} alt={{dados["p.nome"]}}>
+    </nav>
+    <body>
+        <h1>{{dados["p.nome"]}}</h1>
+        <span class="infoBlock"><span class="field">Sigla: </span><span class="info">{{dados["p.sigla"]}}</span></span>
+        <span class="infoBlock"><span class="field">Número de membros: </span><span class="info">{{dados["p.totalMembros"]}}</span></span>
+        <span class="infoBlock"><span class="field">Situação: </span><span class="info">{{dados["p.situacao"]}}</span></span>
+        <span class="infoBlock"><span class="field">Identificação: </span><span class="info">{{dados["p.id"]}}</span></span>
+    </body>
+</html>
