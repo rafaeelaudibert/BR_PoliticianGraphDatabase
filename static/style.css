@@ -1,8 +1,8 @@
 body {
     padding-left: 11em;
-    font-family: Impact, Georgia, "Times New Roman", Times, serif;
+    font-family: 'Roboto', sans-serif;
     color: black;
-    background-color: grey }
+    background-color: #222629 }
 
 ul.navbar {
     margin-top: 5vw;
@@ -14,18 +14,19 @@ ul.navbar {
     width: 10em }
 
 h1 {
+    color: whitesmoke;
     text-align: center;
     font-size: 5vw }
 
 
 ul.navbar li {
     text-align: center;
-    background-color: lightgrey;
+    background-color: #6B6E70;;
     width: 10vw;
     padding: 1vw;
     border-bottom: 1px solid black;
     transition: 0.3s;
-    color: grey;
+    color: rgb(0, 0, 0);
 }
 
 ul.navbar li:hover {
@@ -38,7 +39,7 @@ ul.navbar li:hover {
 ul.navbar a {
     color: inherit;
     font-size: 2vw;
-    font-family: Impact, Georgia;
+    font-family: 'Roboto', sans-serif;
     text-decoration: none }
 
 
@@ -48,7 +49,7 @@ address {
     border-top: thin dotted }
 
 #vis {
-    background-color: lightgrey;
+    background-color: whitesmoke;
     margin-left: 15%;
     height: 70%;
     width: 70%;
@@ -86,7 +87,7 @@ h2 {
     float: right;
     margin-right: 15%;
     text-align: center;
-    background-color: lightgrey;
+    background-color: #61892F;;
     border-bottom: 1px solid black;
     height: auto;
     width: 50vw;
@@ -101,7 +102,7 @@ h2 {
 
 .field {
     font-weight: normal;
-    color: #505050;
+    color: #6B6E70;
     margin-top: 0.25vw;
 }
 

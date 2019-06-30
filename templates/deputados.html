@@ -4,6 +4,7 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
         <script src="https://rawgit.com/neo4j-contrib/neovis.js/master/dist/neovis.js"></script>
         <script src="{{url_for('static', filename='drawGraph.js')}}"></script>
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
         <style>
          ul.navbar a {
              font-size: 1vw;
@@ -20,7 +21,7 @@
          #vis {
              padding: 0;
              position: fixed;
-             background-color: lightgrey;
+             background-color: whitesmoke;
              height: 60%;
              width: 60%;
              border-radius: 2vw;
@@ -40,7 +41,7 @@
             <li><a href="{{ url_for("ficha_deputado", deputado=deputado)}}">{{deputado}}</a></li>
                 {%endfor%}
         </ul>
-        <h1>Deputados Brasileiros</h1>
+        <h1>Deputados Federais</h1>
         <div id="vis"></div>
     </body>
 </html>

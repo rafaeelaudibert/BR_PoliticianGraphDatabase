@@ -8,14 +8,33 @@ function draw(cypher){
             "Partido": {
                 size: "totalMembros",
                 caption: "sigla"
+            },
+            "Deputado": {
+                caption: "nome"
+            },
+            "Municipio": {
+                caption: "nome"
+            },
+            "UnidadeFederativa": {
+                caption: "sigla"
+            },
+            "Despesa": {
+                caption: "nomeFornecedor"
+            },
+            "Orgao": {
+                caption: "siglaOrgao"
             }
         },
         relationships: {
             "FILIADO": {
                 caption: false
+            },
+            "GASTOU": {
+                caption: "data"
             }
         },
-        initial_cypher: cypher
+        initial_cypher: cypher,
+        arrows: true,
     }
     var viz = new NeoVis.default(config)
     viz.render()
