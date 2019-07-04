@@ -25,7 +25,16 @@ function draw(cypher){
                 caption: "siglaOrgao"
             },
             "Demonstracao": {
-                size: "n"
+                size: "n",
+                caption: "nome"
+            },
+            "Demonstracao2": {
+                size: "percentual",
+                caption: "nome"
+            },
+            "PartidoExpense": {
+                size: "valor",
+                caption: "sigla"
             }
         },
         relationships: {
