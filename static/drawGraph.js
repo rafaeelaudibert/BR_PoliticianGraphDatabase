@@ -23,6 +23,9 @@ function draw(cypher){
             },
             "Orgao": {
                 caption: "siglaOrgao"
+            },
+            "Demonstracao": {
+                size: "n"
             }
         },
         relationships: {
