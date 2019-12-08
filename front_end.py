@@ -25,7 +25,8 @@ def deputados():
 @app.route("/deputados/<deputado>")
 def ficha_deputado(deputado):
     dados = camaraDosDeputados.get_deputado_info(deputado)
-    return render_template("ficha_deputado.html", dados=dados, cypher=camaraDosDeputados.get_deputado_relations_query(deputado))
+    gastos = camaraDosDeputados.get_deputado_gasto(deputado)
+    return render_template("ficha_deputado.html", dados=dados, cypher=camaraDosDeputados.get_deputado_relations_query(deputado), gasto = gastos)
 
 @app.route("/partidos/")
 def partidos():
