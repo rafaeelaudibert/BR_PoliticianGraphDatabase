@@ -194,6 +194,20 @@ class CamaraDosDeputados:
         for record in self.graph.run(query):
             return record
 
+
+    def get_deputado_gasto(self, deputado_name):
+        query = """
+            MATCH (d:Deputado)-[:GASTOU]-(des:Despesa)
+            WHERE d.nome =
+        """
+        query += '\"' + deputado_name + '\"'
+        query += """
+            RETURN round(100*SUM(des.valorDocumento))/100 AS gasto
+        """
+        for record in self.graph.run(query):
+            return record
+    
+
     def get_deputado_relations_query(self, deputado_name):
         query = "\"MATCH a=(d:Deputado)-[]-() WHERE d.nome = '" + deputado_name + "' RETURN a\""
         return query
