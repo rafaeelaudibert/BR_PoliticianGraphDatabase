@@ -6,18 +6,30 @@ class CamaraDosDeputados:
     def __init__(self):
         # 1: username 2: password 3: port
         #                          |1 | 2 |          | 3 |
-        self.graph = Graph("http://gui:abc@127.0.0.1:7474/db/data")
+        self.graph = Graph("http://neo4j:ihc@localhost:7474/db/data")
 
     def init_db(self):
+        print("Delete all")
         self.delete_all()
+
+        print("Create constraints")
         self.create_constraints()
-
+        
+        print("Get dep ids")
         self.depIds = self.get_dep_ids()
+        print("Get party ids")
         self.partyIds = self.get_party_ids()
-
+        
+        print("Init deputados")
         self.init_deputados()
+
+        print("Init despesas")
         self.init_despesas()
-        self.init_orgaos()
+
+        print("Init orgaos")
+        # self.init_orgaos()
+
+        print("Init partidos")
         self.init_partidos()
 
     def delete_all(self):

@@ -1,9 +1,9 @@
 function draw(cypher){
     var config = {
-        container_id: "vis",
-        server_url: "bolt://localhost:7687",
-        server_user: "gui",
-        server_password: "abc",
+	container_id: "vis",
+        server_url: "bolt://ec2-34-237-60-91.compute-1.amazonaws.com:7687",
+        server_user: "neo4j",
+        server_password: "ihc",
         labels: {
             "Partido": {
                 size: "totalMembros",

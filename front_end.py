@@ -6,7 +6,7 @@ name = "APPLICATION" #"__main__"
 app = Flask(__name__)
 
 camaraDosDeputados = CamaraDosDeputados()
-#camaraDosDeputados.init_db()
+# camaraDosDeputados.init_db()
 
 @app.route("/", methods=['GET'])
 def home():
@@ -48,7 +48,7 @@ def ficha_orgao(orgao):
     return render_template("ficha_orgao.html", dados=dados)
 
 if name == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)
 else:
-    app.run()
+    app.run(host='0.0.0.0', port=5000)
 
