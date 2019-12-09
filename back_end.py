@@ -213,6 +213,21 @@ class CamaraDosDeputados:
         for record in self.graph.run(query):
             return record
 
+    def get_partido_deputado(self, partido_name):
+        query = """
+            MATCH (d:Deputado)-[:FILIADO]-(p:Partido)
+            WHERE p.sigla =
+        """
+        query += '\"' + partido_name + '\"'
+        query += """
+            RETURN d.nome
+        """
+        deputados = []
+        for record in self.graph.run(query):
+            deputados.append(record["d.nome"])
+        return deputados
+
+
     def get_orgao_info(self, orgao_name):
         query = """
             MATCH (o:Orgao)
