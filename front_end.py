@@ -36,7 +36,8 @@ def partidos():
 @app.route("/partidos/<partido>")
 def ficha_partido(partido):
     dados = camaraDosDeputados.get_partido_info(partido)
-    return render_template("ficha_partido.html", dados=dados);
+    deputados = camaraDosDeputados.get_partido_deputado(partido)
+    return render_template("ficha_partido.html", dados=dados, deputados=deputados);
 
 @app.route("/orgaos/")
 def orgaos():

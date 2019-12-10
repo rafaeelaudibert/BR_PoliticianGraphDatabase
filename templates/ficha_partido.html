@@ -6,6 +6,33 @@
         <script src="{{url_for('static', filename='drawGraph.js')}}"></script>
         <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
         <style>
+         ul.navbar a {
+             font-size: 1vw;
+         }
+
+         ul.navbar li {
+             width: 15vw;
+         }
+
+         ul.navbar li:hover {
+             width: 20vw;
+         }
+
+         #vis {
+             padding: 0;
+             position: fixed;
+             background-color: whitesmoke;
+             height: 60%;
+             width: 60%;
+             border-radius: 2vw;
+             transition: 0.3s;
+         }
+
+         #vis:hover {
+             width: 70%;
+             height: 70%;
+         }
+
          body{
              padding-left: 0%;
          }
@@ -15,10 +42,17 @@
         <img src={{dados["p.urlLogo"]}} alt={{dados["p.nome"]}}>
     </nav>
     <body>
+       
         <h1>{{dados["p.nome"]}}</h1>
         <span class="infoBlock"><span class="field">Sigla: </span><span class="info">{{dados["p.sigla"]}}</span></span>
         <span class="infoBlock"><span class="field">Número de membros: </span><span class="info">{{dados["p.totalMembros"]}}</span></span>
         <span class="infoBlock"><span class="field">Situação: </span><span class="info">{{dados["p.situacao"]}}</span></span>
         <span class="infoBlock"><span class="field">Identificação: </span><span class="info">{{dados["p.id"]}}</span></span>
+        <span class="infoBlock"><span class="field">Deputados: </span><span class="info">
+            {%for deputado in deputados%}
+            <li><a href="{{ url_for("ficha_deputado", deputado=deputado)}}">{{deputado}}</a></li>
+            {%endfor%}    </span></span>
+
+</span>
     </body>
 </html>
