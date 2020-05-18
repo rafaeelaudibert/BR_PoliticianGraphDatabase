@@ -6,7 +6,7 @@ name = "APPLICATION" #"__main__"
 app = Flask(__name__)
 
 camaraDosDeputados = CamaraDosDeputados()
-#camaraDosDeputados.init_db()
+camaraDosDeputados.init_db()
 
 @app.route("/", methods=['GET'])
 def home():

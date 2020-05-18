@@ -6,7 +6,7 @@ class CamaraDosDeputados:
     def __init__(self):
         # 1: username 2: password 3: port
         #                          |1 | 2 |          | 3 |
-        self.graph = Graph("http://gui:abc@127.0.0.1:7474/db/data")
+        self.graph = Graph("bolt://localhost:7687", auth=('neo4j', 'abc'))
 
     def init_db(self):
         self.delete_all()
@@ -24,12 +24,13 @@ class CamaraDosDeputados:
         self.graph.run("MATCH(n) DETACH DELETE n")
 
     def create_constraints(self):
-        self.graph.run("CREATE CONSTRAINT ON (d:Deputado) ASSERT d.nome is UNIQUE;")
+        pass
+        """ self.graph.run("CREATE CONSTRAINT ON (d:Deputado) ASSERT d.nome is UNIQUE;")
         self.graph.run("CREATE CONSTRAINT ON (d:Deputado) ASSERT d.id is UNIQUE;")
         self.graph.run("CREATE CONSTRAINT ON (p:Partido) ASSERT p.sigla is UNIQUE;")
         self.graph.run("CREATE CONSTRAINT ON (m:Municipio) ASSERT m.nome is UNIQUE;")
         self.graph.run("CREATE CONSTRAINT ON (uf:UnidadeFederativa) ASSERT uf.sigla is UNIQUE;")
-        self.graph.run("CREATE CONSTRAINT ON (o:Orgao) ASSERT o.idOrgao is UNIQUE;")
+        self.graph.run("CREATE CONSTRAINT ON (o:Orgao) ASSERT o.idOrgao is UNIQUE;") """
 
     def get_dep_ids(self):
         get_depIds_query = """
@@ -58,7 +59,7 @@ class CamaraDosDeputados:
                 CALL apoc.load.json(url) YIELD value
                 UNWIND value.dados as dados
 
-                MERGE(d:Deputado {id : TOINT(dados.id), nomeCivil : dados.nomeCivil})
+                MERGE(d:Deputado {id : toInteger(dados.id), nomeCivil : dados.nomeCivil})
                     ON CREATE SET d.nome = dados.ultimoStatus.nome, d.idLegislatura = dados.ultimoStatus.idLegislatura, d.uri = dados.uri, d.urlFoto = dados.ultimoStatus.urlFoto,
                     d.sexo = dados.sexo, d.nascimento = DATE(dados.dataNascimento), d.cpf = dados.cpf, d.email = dados.ultimoStatus.gabinete.email, d.escolaridade = dados.escolaridade
 
@@ -79,7 +80,7 @@ class CamaraDosDeputados:
     def init_despesas(self):
         for id in self.depIds:
             init_despesas_query = """
-                WITH 'https://dadosabertos.camara.leg.br/api/v2/deputados/{id}/despesas?ano=2019&itens=100000&ordem=ASC&ordenarPor=mes'""".format(id=id) + """ AS url
+                WITH 'https://dadosabertos.camara.leg.br/api/v2/deputados/{id}/despesas?ano=2019&ano=2020&itens=100000&ordem=ASC&ordenarPor=mes'""".format(id=id) + """ AS url
                 CALL apoc.load.json(url) YIELD value
                 UNWIND value.dados as despesas
                 """ + "MATCH (dep:Deputado {id:" +str(id) +"})" + """
@@ -100,7 +101,7 @@ class CamaraDosDeputados:
                 UNWIND value.dados as orgaos
                 """ + "MATCH (dep:Deputado {id:" +str(id) +"})" + """
                 FOREACH(orgao in orgaos |
-                    MERGE (o:Orgao {idOrgao: TOINT(orgao.idOrgao)})
+                    MERGE (o:Orgao {idOrgao: toInteger(orgao.idOrgao)})
                         ON CREATE SET o.uriOrgao = orgao.uriOrgao, o.siglaOrgao = orgao.siglaOrgao, o.nomeOrgao = orgao.nomeOrgao
 
                     CREATE (dep)-[:PARTICIPA {titulo: orgao.titulo, dataInicio: DATE(left(orgao.dataInicio,10)), dataFim: DATE(left(orgao.dataFim,10))}]->(o)
@@ -119,8 +120,8 @@ class CamaraDosDeputados:
                 MATCH (p:Partido {sigla: dados.sigla})
                 MATCH (d:Deputado {nome: dados.status.lider.nome})
                 MERGE (d)-[:LIDER]-(p)
-                SET p.id = TOINT(dados.id), p.nome = dados.nome, p.situacao = dados.status.situacao,
-                p.totalMembros = TOINT(dados.status.totalMembros), p.urlLogo = dados.urlLogo
+                SET p.id = toInteger(dados.id), p.nome = dados.nome, p.situacao = dados.status.situacao,
+                p.totalMembros = toInteger(dados.status.totalMembros), p.urlLogo = dados.urlLogo
             """
             self.graph.run(init_party_query)
 
